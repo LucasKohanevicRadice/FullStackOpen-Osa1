@@ -1,0 +1,91 @@
+Git and Githb for beginners crash course
+
+Gwendolyn mikävittu
+
+Termit:
+
+Directory - folder
+terminal or command line - interface for text commands, esim vscode ?
+CLI - command line interface, esim. cmd, terminal
+cd - change directory
+Code editor - Vscode
+Repository - Project, of the folder/place where my projects are kept
+Github - a website to host my repositories online
+Git - the tool that tracks the changes in code overtime
+
+Git commands (lower case)
+
+clone - bring a repository that is hosted somewhere like GitHub into a folder into my local machine
+
+add -> track your files and changes in Git
+
+commit -> save your files in Git
+
+push -> Upload Git commits to a remote repo, like GitHub
+
+pull -> Download changes from remote repo to your local machine, the opposite of push
+
+
+
+Käytä gitbashia terminaalissa gittiä käytettäessä.
+
+Repon kloonataksesi:
+Mene githubiin, mene repositorion sivulle jonka haluat kopioida
+ja mahdollisesti muokata.
+
+Vihreästä palkista "code" kloonaa repon https tai ssh(jos ssh key löytyy)
+
+Mene terminaaliin
+kirjoita 'git clone " + repon ssh koodi tai https
+
+Päästäksesi repon tiedostoihin käsiksi:
+
+kirjoita terminaaliin "cd " + repon nimi, esim. "fullstackopen2021" isoilla tai pienillä kirjaimilla ei väliä.
+
+
+luodaksesi muutoksia tiedostoihin:
+
+avaa valittu tiedosto, tee muutokset, tallenna ne, vaikka ctrl + s komennolla.
+
+"git status" kertoo tiedostojen tilan, että onko niitä modifioitu ja tallennettu onnistuneesti gittiin.
+
+"git add ." tallentaa muutokset kaikkiin muutettuihin tiedostoihin.
+"git add . " + tiedoston nimi tallentaa muutokset vain kyseisessä tiedostossa.
+
+Päivitettyjen tiedostojen pushaaminen githubiin:
+
+"git commit -m "Muutoksen otsikko" -m "Muutoksen kuvaus" "
+-m tarkoittaa viestiä "message"
+Eli ensimmäinen -m Antaa otsikon repon muutokselle, toinen -m kuvaelman muutoksesta
+
+SSH Avaimet:
+
+komento "ssh-keygen -t rsa -b 4096 -C "sähköpostiosoite" " luo uuden ssh avaimen repolle.
+Tarvitset tämän viedäksesi muutokset ja tiedostot githubiin. 
+
+SSH key on verifikaatio siitä, että se olet oikeasti sinä joka niitä tiedostoja tallentaa omaan githubiisi.
+
+Yllä olevan komennon jälkeen terminaali kysyy, että haluatko luoda erillisen tiedoston, johon ssh avain tallennetaan.
+Tämän jälkeen voit asettaa salasanan avaimelle.
+
+"ls | grep testkey" komennolla voit etsiä avaimen jonka olet luonut.
+
+Avaimen luomisen jälkeen on luotu kaksi tiedostoa
+
+"avain"
+ja
+"avain.pub"
+
+"avain.pub" on se joka tallennetaan githubiin muitten nähtäväksi, jotta muuta pääsevät käsiksi repoosi.
+pub tarkoittaa publiccia
+
+tiedosto jossa ei ole .pub päätettä on oma henkilökohtainen avain, jota ei jaeta muitten kanssa.
+
+Ainakun halutaan käyttää githubia tai pushata koodia githubiin oman koneen kautta, silloin käytettän privaatti avainta,
+jolla todistetaan githubille, että se olet todella sinä joka on repon oikea omistaja ja public avaimen alkuperäinen luoja.
+
+
+
+
+ 
+
