@@ -1,30 +1,25 @@
-import React from 'react'
-
 const Hello = (props) => {
   return (
     <div>
-      <p>Hello {props.name}, you are {props.age} years old </p>
-      </div>
-  )
-}
-
-
-
-const App = () => {
-
-  const nimi = "pekka"
-  const ika = 10
-
-  return(
-    <div>
-      <h1>Greetings</h1>
-      <Hello name= "Gegels" age = {25+47}/>
-      <Hello name = "pipölsh" age = {44+1} />
-      <Hello name = {nimi} age = {ika} />
+      <p>
+        Hello {props.name}, you are {props.age} years old
+      </p>
     </div>
   )
 }
 
+const App = () => {
+  const nimi = 'Pekka'
+  const ika = 10
+
+  return (
+    <div>
+      <h1>Greetings</h1>
+      <Hello name="Maya" age={26 + 10} />
+      <Hello name={nimi} age={ika} />
+    </div>
+  )
+}
 //   const now = new Date()
 //   const a = 10
 //   const b = 20
@@ -48,4 +43,3 @@ const App = () => {
   //   </div>
 
 
-export default App
