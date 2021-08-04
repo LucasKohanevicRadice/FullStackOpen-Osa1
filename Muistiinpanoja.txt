@@ -1,0 +1,51 @@
+
+
+Muuttujat:
+
+Javascriptissä voi määritellä muuttujat const, let ja var avulla. 
+
+-   Const on muuttumaton muuttuja, vakio, ikäänkuin yksiarvoinen tuple pythonissa.
+
+-   let on muuttuja on perinteistyyppinen muuttuja, jonka arvo voi muuttua lennossa, eri komennoin tms.
+
+-   var on ilmeisesti letin tyyppinen muuttuja, mutta koska var toimii tietyissä tilanteissa eri tavalla
+    kuin useimpien kielien muuttujien määrittely, ei varin käyttö ole suositeltavaa.
+
+
+
+esimerkki:
+
+
+const x = 1
+let y = 5
+
+console.log(x,y) // tulostuu 1,5
+y += 10
+console.log(x,y) // tulostuu 1,15
+y = "teksti"
+console.log(x,y) // tulostuu 1,teksti
+x = 4 // aiheuttaa virheen, koska const on muuttumaton muuttuja.
+
+
+
+
+
+Taulukot:
+
+
+Taulukko ja muutama esimerkki sen käytöstä:
+
+const t = [1,-1,3]
+
+t.push(5)   // Ilmeisesti js. push on sama kuin append pythonissa ? 
+
+console.log(t.length)   // tulostuu 4
+console.log(t[1])   // tulostuu -1, t kutsuu muuttujan t, [1], indeksin kutsuminen toimii samalla tavalla kuin pythonissa.
+
+t.forEach(value => {
+    console.log(value)  // Jokainen taulukon/listan arvo tulostuu omalle rivilleen.
+})
+
+
+
+
