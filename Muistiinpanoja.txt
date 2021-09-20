@@ -39,7 +39,7 @@ const t = [1,-1,3]
 
 t.push(5)   // Ilmeisesti js. push on sama kuin append pythonissa ? 
 
-console.log(t.length)   // tulostuu 4
+console.log(t.length)   // tulostuu 4 (sama kun len, pythonissa)
 console.log(t[1])   // tulostuu -1, t kutsuu muuttujan t, [1], indeksin kutsuminen toimii samalla tavalla kuin pythonissa.
 
 t.forEach(value => {
@@ -127,4 +127,223 @@ const object3 = {
 }
 
 Kenttien arvot voivat olla mitä vaan: lukuja merkkijonoja taulukoita, olioita
+
+Olioiden kenttiin viitataan pistenotaatioilla tai hakasulkeilla:
+
+console.log(object1.name) // Tulostuu Arto Hellas
+const fieldName = 'age'
+console.log(object1[fieldName]) //Tulostuu 35, muuttuja fieldName omaa string arvon 'age', joka viittaa ikä attribuutti/muuttujaan, const muuttujarykelmässä object1
+
+Olioille voidaan lisätä kenttiä myös lennossa joko pistenotaation tai hakasulkeiden avulla:
+
+object1.address = 'Tapiola'
+object1['secret number'] = 12341    (Oliot Javascriptissä siis toimivat aika samoin tavoin kuin luokat ja niitten oliot pythonissa.)
+
+Jälkimmäinen lisäyksistä on pakko tehdä hakasulkeiden avulla, sillä pistenotaatiota käytettäessä secret number ei kelpaa kentän nimeksi.
+
+JavaScriptissä olioilla voi myös olla metodeja. Tällä kursilla emme kuitenkaan tarvitse itse määriteltyjä metodillisia olioitam joten asiaa ei käsitellä kuin lyhyesti.
+
+Olioita on mahdollista määritellä myös ns. konstruktorifunktioiden avulla, jolloin saadaan aikaan hieman monien muiden ohjelmointikielten 
+esim. Javan tai pythonin luokkia muistuttava mekanismi. Javascriptissä ei kuitenkaan ole luokkia samassa mielessä kuin olio-ohjelmointikielissä. Kieleen on kuitenkin lisätty versiosta ES6
+alkaen luokkasyntaksi, joka helpottaa tietyissä tilanteissa olio-ohjelmointikielimäisten luokkien esittämistä.
+
+FUNKTIOT
+
+Olemme jo tutustuneet ns.nuolifunktioiden määrittelyyn. Täydellinen eli "Pitkän kaavan" mukaan menevä tapa nuolifnuktion määrittelyyn on seuraava:
+
+const sum (p1, p2) => {
+    console.log(p1)
+    console.log(p2)
+    return p1 + p2
+}
+
+ja funktiota kutsutaan:
+
+const result = sum(1,5)
+console.log(result)
+
+Jos parametrejä on vain yksi, sulut voidaan jättää määrittelystä pois:
+
+const square = p => {
+    console.log(p)
+    return p*p
+}
+
+Jos funktio sisältää ainoastaan yhden lausekkeenm ei aaltosulkeita tarvita. Tällöin funktio palauttaa ainoan lausekkeensa arvon. Eli jos poistetaan konsoliin tulostus,
+voidaan edellinen funktio ilmaista lyhyemmin seuraavasti:
+
+const square = p => p*p 
+
+Seuraava muoto on erityisen kätevä käsiteltäessä taulukkoja esim. map-metodin avulla:
+
+const t = [1,2,3]
+const tSquared = t.map(p => p * p)
+// tSquared on nyt [1,4,9]
+
+Nuolifunktio on tullut javascriptiin vasta muutama vuosi sitten. Tätä ennen ainoa tapa funktioiden määrittelyyn oli avainsana 'function' avulla.
+
+Määrittelytapoja function:lle on kaksi. Funktiolle voidaan antaa nimi, jonka avulla funktioon voidaan viitata:
+
+function product(a,b) {
+    return a*b
+}
+
+const vastaus = product(2,6)
+
+-------------
+
+Toinen tapa on tehdä määrittely funktiolausekkeena. Tällöin funktiolle ei tarvitse antaa nimeä ja määrittely voi sijaita muun koodin seassa:
+
+const average = function(a,b) {
+    return (a+b) / 2
+
+}
+
+const vastaus = average(2,5)
+
+Tällä kurssilla määritellään kaikki funktiot kuitenkin nuolisyntaksin avulla.
+
+
+
+OLIOIDEN METODIT JA this (Ei kurssin kannalta relevanttia)
+
+koska tällä kurssilla käytetään reactin hookit sisältävää versiota, tämän kurssin aikana ei tarvitse määritellä ollenkaan metodeita olioille. TÄMÄN LUVUN ASIAT EIVÄT SIIS OLE KURSSIN KANNALTA
+RELEVANTTEJA. Mutta käytettäessä vanhempaa reactia, nämä asiat täytyy osata.
+
+Nuolifunktiot ja avainasanan function avulla määritellyt funktiot poikkeavat radikaalisti siinä, miten ne käyttäytyvät olioon itseensä viittaavaan avainsanan this suhteen.
+
+Voimme liittää olioille metodeja määrittelemällä niille kenttiä, jotka ovat funktioita:
+
+const arto = {
+    name: 'Arto Hellas',
+    age: 35,
+    education: 'filosofian tohtori',
+    greet: function() {
+        console.log('hello, my name is' this.name)
+    },
+}
+
+arto.greet() // tulostuu: 'hello, my name is Arto Hellas'
+
+Metodin sisällä voidaan siis viitata olion kenttien arvoihin avainsanan this avulla vastaavasti kuin javassa. Pythonissa saman asian ajaa avainsana self.
+
+Metodeja voi lisätä myös olion luomisen jälkeen.
+
+const arto = {
+    name: 'Arto Hellas',
+    age: 35,
+    education: 'filosofian tohtori',
+    greet: function() {
+        console.log('Hello, my name is', this.name)
+    },
+}
+
+arto.growOlder = function () {
+    this.age += 1
+}
+
+console.log(arto.age) // tulostuu 35
+arto.growOlder()
+console.log(arto.age) // tulostuu 36
+
+Muutetaan oliota hiukan:
+
+const arto = {
+    name: 'Arto Hellas',
+    age: 35
+    education: 'Filosofian tohtori'
+    greet: function() {
+        console.log('hello, my name is' this.name)
+    },
+    doAddition: function(a,b) {
+        console.log(a + b)
+    },
+}
+
+
+arto.doAddition(1, 4) // tulostuu 5
+
+const referenceToAddition = arto.doAddition
+referenceToAddition(10, 25) // tulostuu 25
+
+oliolla on nyt metodi doAddition, joka osaa laskea parametrina annettujen lukujen summan. Metodia voidaan kutsua normaaliin tapaan olion kautta arto.doAddition(1, 4) 
+tai tallettamalla metodiviite muuttujaan ja kutsumalla metodia muuttujan kautta, joka tässä tapauksessa on muodossa 'referenceToAddition(x, y)'
+
+Tosin jos samaa yrittää metodille greet, aiheutuu ongelmia:
+
+arto.greet() // tulostuu hello, my name is Arto Hellas
+
+const referenceToGreet = arto.greet
+referenceToGreet() // tulostuu ainoastaan hello, my name is
+
+Kun metodia kutsutaan viitteen kautta, metodi on kadottanut tiedon siitä, mikä alkuperäinen this oli. Toisin kuin melkein kaikissa muissa kielissä, JavaScriptissä this:n arvo
+määrittyy sen mukaan MITEN metodia on kutsuttu. Kutsuttaessa metodia viitteen kautta, this arvoksi tulee ns. globaali objekti ja lopputulos ei yleensä ole ollenkaan se
+mitä olettaisi.
+
+This:n kadottaminen saattaa aiheuttaa ongelmia. Eteen tulee usein tilanteita, joissa Reactin/Noden (Oikeimmin ilmaistuna selaimen JavaScript-moottorin) tulee kutsua joitain
+ohjelmoijan määrittelemien olioiden metodeja. Tällä kurssilla kuitenkin säästymme näiltä ongelmilta, sillä käytämme ainoastaan "thissitötnä" JavaScriptiä.
+
+this katoaa esimerkiksi, jos pyydetään Artoa tervehtimään sekunnin kuluttua metodia setTimeout käyttäen.
+
+const arto = {
+    name: 'Arto Hellas',
+    greet: function() {
+        console.log('hello, my name is', this.name)
+    },
+}
+
+setTimeout(arto.greet, 1000)
+// sekunnin päästä tulostuu hello, my name is
+
+JavaScriptissä this:in arvo määräytyy siitä miten metodia on kutsuttu. setTimeoutia käytettäessä metodia kutsuu JavaScript moottori, ja this viittaa Timeout-olioon.
+
+On useita mekanismeja, joiden avulla alkuperäinen this voidaan säilyttää, eräs näistä on metodin bind käyttö:
+
+setTimeout(arto.greet.bind(arto), 1000)         //  Sekunnin päästä tulostuu hello, my name is Arto Hellas
+
+Komento arto.greet.bind(arto) luo uuden funktion, jossa this on sidottu tarkoittamaan Artoa riippumatta siitä, missä ja miten metodia kutsutaan. 
+
+nuolifunktioiden avulla on mahdollista ratkaista eräitä this:iin liittyviä ongelmia. Olioiden metodeina niitä ei kuitenkaan kannata käyttää, sillä silloin this ei toimi ollenkaan.
+
+Jos haluan ymmärtäää paremmin JavaScriptin toimintaa, egghead.io:n 20 minuutin screencast-sarja  UnderStan JavaScript's this KeyWord in Depth on kova sana.
+
+
+LUOKAT 
+
+Kuten aiemminkin mainittiin, Javascriptissä ei ole olemassa olio-ohjelmointikielten luokkamekanismia. JavaScriptissä on kuitenkin ominaisuuksia, jotka mahdollistavat
+olio-ohjelmoinnin luokkien simuloinnin. Tutustutaan alempana pikaisesti ES6:n myötä JavasScriptiin tulleeseen luokkasyntaksiin, joka helpottaa oleellisesti
+luokkien (tai luokan kaltaisten asioiden) määrittelyä JavaScriptissä.
+
+Seuraavassa on määritelty "luokka" Person ja kaksi Person-oliota.
+
+
+class Person {
+    constructor(name, age) {
+        this.name = name
+        this.age = age
+    }
+    greet() {
+        console.log('hello, my name is', this.name)
+    }
+}
+
+const arto = new Person('Arto Hellas', 35)
+arto.greet()
+
+const juhq = new Person('Juha Tauriainen', 48)
+juhq.greet()
+
+Syntaksin osalta luokat ja niistä luodut oliot muistuttavat erittäin paljon esim. Javan luokkia ja olioita. Käyttäytymiseltäänkin ne ovat aika lähellä Javan olioita.
+Kyse on kuitenkin JavaScriptin prototyyppiperintään perustuvista olioista. Molempien olioiden todellin tyyppi on object sillä JavaScriptissä ei ole muita tyyppejä kuin;
+Boolean, Null, Undefined, Number, String, Symbol, BigInt ja object.
+
+ES6:n luokkasyntaksia käytetään paljon "vanhassa" Reactissa ja Node.Js:ssä ja siksi sen tunteminen on fiksua. Koska tällä kurssilla käytetään kuitenkin Reactiin vuonna 2019
+lisättyä Hook ominaisuutta, tällä kurssilla ei ole ollenkaan tarvetta käyttää JavaScriptin luokkasyntaksia.
+
+
+
+
+
+
+
  
