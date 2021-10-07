@@ -3,21 +3,6 @@ import Person from './components/Person'
 
 
 
-// const addToPhonebook = ({persons, name, number, newName, newNumber,nameEvent,numberEvent}) => {
-
-//   for (let i = 0; i < persons.length; i++) {
-//     if (persons[i].name === name) {
-//       alert("This name is already in use")
-//     }
-
-//     else if (persons[i].number === number) {
-//       alert("This number is already in use")
-//     }
-
-//     else ()
-//   }
-
-// }
 
 
 
@@ -32,6 +17,18 @@ const nameExists = (name, persons) => {
     return false
   }
 }
+
+
+const ReturnAll = ({persons}) => {
+
+  const all = persons.map(person =>
+    <Person key = {person.id} person = {person}/>)
+    
+    return all
+}
+
+// Muista, jos käytät komponentti tyylistä funktiota, sille pitää asettaa 
+// Iso ensimmäinen kirjain, muuten se ei toimi.
 
 
 
@@ -92,11 +89,14 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      <p>
+
+      <p><ReturnAll persons = {persons}/></p>
+
+      {/* <p>
         {persons.map(person =>
         <Person key = {person.id} person = {person}/>
           )}
-      </p>
+      </p> */}
     </div>
   )
 
