@@ -19,6 +19,8 @@ const nameExists = (name, persons) => {
 }
 
 
+
+
 const ReturnAll = ({persons}) => {
 
   const all = persons.map(person =>
@@ -27,13 +29,18 @@ const ReturnAll = ({persons}) => {
     return all
 }
 
-// Muista, jos käytät komponentti tyylistä funktiota, sille pitää asettaa 
-// Iso ensimmäinen kirjain, muuten se ei toimi.
+//  Muista, jos käytät komponentti tyylistä funktiota, 
+// sille pitää asettaa iso ensimmäinen kirjain, muuten se ei toimi.
+//  const Component = () => ... ja jossain <Component />, niin Component on komponentti. 
+//  const addPerson = () => ... ja jossain addPerson() niin addPerson on funktio.
 
 
 
 const App = () => {
   const [ persons, setPersons] = useState([]) 
+
+  const [search, setSearch] = useState('')
+
   const [newNumber, setNewNumber] = useState(
     ''
   )
