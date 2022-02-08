@@ -1,4 +1,37 @@
 import React from 'react'
+import Course from './components/course'
+
+
+
+  // const Course = ({courses}) => {
+
+  //   const everything = (
+      
+  //     <div>
+  //       {courses.map((course) =>
+  //       <div key = {course.id}>
+  //         <h1>{course.name}</h1>
+
+  //         {course.parts.map((part) =>
+  //         <div key ={part.id}>
+  //           <p>{part.name} {part.exercises}</p>
+  //         </div>
+  //         )}
+  //       </div>
+  //       )}
+  //     </div>
+
+  //   ) 
+  //     return (
+  //       <div>
+  //         {everything}
+  //       </div>
+  //     )
+
+  // }
+
+
+
 
 
 
@@ -50,36 +83,8 @@ const App = () => {
     }
   ]
 
-
-  const CoursesAndParts = () => {
-
-    const everything = (
-      
-      <div>
-        {courses.map((course) =>
-        <div key = {course.id}>
-          <h1>{course.name}</h1>
-
-          {course.parts.map((part) =>
-          <div key ={part.id}>
-            <p>{part.name} {part.exercises}</p>
-          </div>
-          )}
-        </div>
-        )}
-      </div>
-
-    ) 
-      return (
-        <div>
-          {everything}
-        </div>
-      )
-
-  }
-
   return (
-    <CoursesAndParts/>
+    <Course courses = {courses}/>
   )
 }
 
