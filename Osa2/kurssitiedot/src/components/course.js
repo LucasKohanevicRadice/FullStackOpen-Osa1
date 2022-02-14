@@ -3,12 +3,14 @@ import React from 'react'
 
 const Course = ({courses}) => {
 
+
     const everything = (
-      
+  
       <div>
         {courses.map((course) =>
         <div key = {course.id}>
           <h1>{course.name}</h1>
+
 
           {course.parts.map((part) =>
           <div key ={part.id}>

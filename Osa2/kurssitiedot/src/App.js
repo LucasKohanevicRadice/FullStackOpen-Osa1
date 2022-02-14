@@ -42,6 +42,7 @@ const App = () => {
     {
       name: 'Half Stack application development',
       id: 1,
+      // exerciseAmounts = 0,
       parts: [
         {
           name: 'Fundamentals of React',
