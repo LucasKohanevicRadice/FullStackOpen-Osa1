@@ -161,6 +161,9 @@ const arto = {
     greet: function() {
         console.log("hello, my name is", this.name)
     },
+    doAddition: function(a,b) {
+      console.log(a + b)
+    },
 }
 
 console.log()
@@ -180,3 +183,69 @@ arto.growOlder = function() {
   console.log("age variable of object arto: " + arto.age)
   arto.growOlder()
   console.log(`Age variable of object arto, after growOlder using growOlder method: ${arto.age}`)
+  console.log(`Using the method doAddition of the arto object:`)
+  arto.doAddition(1,5)
+
+  // Jos olion metodeita käytetään viitteen kautta, metodi kadottaa tiedon siitä
+  // Mikä alkuperäinen "this" oli.
+  // Toisinkuin melkein kaikissa muissa kielissä, thissin määrittyy sen mukaan MITEN metodia on kutsuttu.
+  // Kutsuttaessa metodia viitteen kautta, this:n arvoksi tulee globaali objekti, joka muuttaa lopputulosta usein täysin.
+  // const viiteAdditioniin = arto.doAddition -> siis kadottaa thissin ja tekee siitä globaalin objektin, sekoittaen lopputuloksen.
+  // This voi myös kadota jos objektin metodia kutsuu setTimeout metodia käyttäen.
+  // esim. setTimeout(arto.greet, 1000)
+
+  // On useita mekanismeja, joiden avulla alkuperäinen this voidaan säilyttää, eräs näistä on metodin bind käyttö:
+  // setTimeout(arto.greet.bind(arto), 1000)
+  // Sekunnin päästä tulostuisi "hello, my name is Arto Hellas"
+  // Komento arto.greet.bind(arto) luo uuden funktion, 
+  // jossa this on sidottu tarkoittamaan Artoa riippumatta siitä, missä ja miten metodia kutsutaan.
+
+  // Nuolifunktioiden avulla on mahdollista ratkaista eräitä this:siin liittyviä ongelmia.
+  // Olioiden metodeina niitä ei kuitenkaan kannata käyttää, sillä silloin this ei toimi ollenkaan.
+  // Eli jos haluaa luoda olio-metodeita, on käytettävä perinteisiä, vanhempia muotoja funktion määrittelystä.
+
+
+// Luokat
+
+// Kuten aiemmin mainittiin, JavaScriptissä ei ole olemassa olio-ohjelmointikielten luokkamekanismia.
+// JS:Ssä on kuitenkin ominaisuuksia jotka "simuloivat" tätä toiminnallisuutta.
+// ES6:n myötä on kuitenkin tullut luokkasyntaksi, jolla pystyy luomaan luokankaltaisia määrittelyitä.
+// Alempana on määritelty "luokka" Person ja kaksi Person-oliota:
+
+class Person {
+
+  constructor(name, age) {
+    this.name = name
+    this.age = age
+
+  }
+
+  greet() {
+    console.log("Hello my name is", this.name)
+  }
+
+}
+
+console.log()
+const lucas = new Person("Lucas Kohanevic", 24)
+lucas.greet()
+
+console.log()
+
+const muhku = new Person ("Mohammed Ali", 86)
+muhku.greet()
+
+// Syntaksin osalta luodut oliot muistuttavat erittäin paljon esim. Pythonin luokkia.
+// Käyttäytymiseltäänkin ne ovat hyvin samanlaisia.
+// Luokkasyntaksin tuominen javascriptiin on ollut osaltaan kiistelty tapaus.
+// Olioiden todellinen datatyyppi on Object, sillä javascriptissä ei ole muita datatyypejä kuin:
+// Boolean, null, Undefined, Number, String, Symbol, BigInt ja Object.
+// ES6:n luokkasyntaksia käytetään paljon vanhassa reactissa ja node.js:ssä, sen takia sen osaaminen on paikallaan.
+// Tällä kurssilla tosin käytetään vuonna 2019 lisättyä hook-ominaisuutta, joten täläl kurssilla ei ole tarvetta käyttää ollenkaan tätä luokkasyntaksia.
+
+
+
+
+
+
+
