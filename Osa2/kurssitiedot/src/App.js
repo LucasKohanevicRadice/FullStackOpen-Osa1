@@ -84,7 +84,7 @@ const App = () => {
   ]
 
   return (
-    <Course courses = {courses}/>
+    courses.map(course => <Course course={course}/>)
   )
 }
 

@@ -183,12 +183,78 @@
 // Toistaiseksi tekemämme muutokset ovat olleet staattisia, mutta miten voisimme luoda dynaamista sisältöä?
 // Toteutetaan nyt laskuri, jonka arvo kasvaa kun nappia painetaan.
 
-const App = (props) => {
+// const App = (props) => {
   
-  const {counter} = props
+//   const {counter} = props
+
+//   return (
+//     <div>{counter}</div>
+//   )
+// }
+
+// export default App
+
+
+// Tilallinen komponentti
+
+// Tähänastisilla komponenteillamme ei ole ollut omaa tilaa, joka voisi muuttua komponentin elinaikana.
+// Määritellään nyt sovelluksemme komponentille App tila reactin hookin avulla.
+
+// import { useState } from "react"
+
+// const App = () => { 
+
+//   // Komponentin määrittelevä funktio
+//   const [ counter, setCounter ] = useState(0)
+
+//   setTimeout(
+//     () => setCounter(counter + 1),
+//     1000
+//   )
+
+//   return (
+//     <div>{counter}</div>
+//   )
+// }
+
+// export default App
+
+// Tiedosto importtaa nyt heti ensimmäisellä rivillä useState-funktion
+// const [ counter, setCounter ] = useState(0) saa aikaan sen, että komponentille luodaan tila, joka saa alkuarvokseen nolla.
+// Funktio palauttaa taulukon, jossa on kaksi alkiota. Alkiot otetaan destrukturointisyntaksilla talteen muuttujiin counter ja setCounter.
+
+// Muuttuja counter pitää sisällään tilan arvon, joka on aluksi nolla.
+// Muuttuja setCounter taas on viite funktioon, jonka avulla tilaa voidaan muuttaa.
+// Sovellus määrittelee funktion setTimeout avulla, että tilan counter arvoa kasvatetaan yhdellä sekunnin päästä:
+
+
+// Tapahtumankäsittely
+
+// Tapahtumankäsittelijät ovat funtkioita, jotka on rekisteröity kutsuttavaksi tiettyjen tapahtumien (events) yhteydessä esim. sivun nappia painamalla.
+// Button elementit tukevat mm.hiiritapahtumia (mouse events), joista yleisin on click.
+// Reactissa funktion rekisteröiminen tapahtumankäsittelijäksi tapahtumalle click tapahtuu seuraavasti:
+
+import { useState } from "react"
+
+const App = () => {
+  const [counter, setCounter] = useState(0)
+
+  const handleClick = () => {
+    setCounter(counter + 1)
+    console.log("clicked")
+}
 
   return (
-    <div>{counter}</div>
+    <div>
+      <div>{counter}</div>
+      <button onClick={handleClick}>
+        plus 1
+      </button>
+
+      <button onClick={() => setCounter(0)}>
+        nollaa
+      </button>
+    </div>
   )
 }
 
