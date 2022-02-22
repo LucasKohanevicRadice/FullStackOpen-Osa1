@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import Person from './components/Person'
-
-
-
-
-
+import SearchBar from "./components/searchbar"
 
 const nameExists = (name, persons) => {
 
@@ -20,11 +16,14 @@ const nameExists = (name, persons) => {
 
 
 
-
 const ReturnAll = ({persons}) => {
 
+
+  console.log(`ReturnAll function, persons-prop attribute: ${persons}`)
   const all = persons.map(person =>
     <Person key = {person.id} person = {person}/>)
+
+    console.log(all)
     
     return all
 }
@@ -37,7 +36,10 @@ const ReturnAll = ({persons}) => {
 
 
 const App = () => {
-  const [ persons, setPersons] = useState([]) 
+  const [ persons, setPersons] = useState([
+    {name: "Lucas", number: "05055599912"},
+    {name: "FB", number:"0449891324"}
+  ]) 
 
   const [search, setSearch] = useState('')
 
@@ -79,11 +81,24 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const onSearchSubmit = term => {
+    console.log("New search submit", term)
+
+    const closeMatches = persons.map((person) => {
+      return <p>{person.name} {person.number}</p>
+    })
+    
+  }
+
 
   return (
     <div>
 
       <h2>Phonebook</h2>
+
+      <SearchBar
+      onSearchSubmit={term => onSearchSubmit(term)}
+      />
 
       <form onSubmit = {addPerson}>
         Name:<input value={newName}
@@ -99,11 +114,6 @@ const App = () => {
 
       <p><ReturnAll persons = {persons}/></p>
 
-      {/* <p>
-        {persons.map(person =>
-        <Person key = {person.id} person = {person}/>
-          )}
-      </p> */}
     </div>
   )
 
