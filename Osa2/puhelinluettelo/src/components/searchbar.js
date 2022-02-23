@@ -1,24 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 
-const Searchbar = ({onSearchSubmit}) => {
-
-    const [term, setTerm] = useState('')
-
-    useEffect(() => {
-        if(term !== "") {
-            onSearchSubmit(term)
-        }
-    }, [term, onSearchSubmit])
+const Searchbar = ({setSearchTerm}) => {
 
     return (
         <div>
             Search: <input 
             type="text"
-            onChange={e => setTerm(e.target.value)}
-            value={term} />
-
-
+            onChange={e => setSearchTerm(e.target.value)}
+            />
         </div>
     )
 }
