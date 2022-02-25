@@ -26,16 +26,18 @@ const ReturnPersons = ({persons, searchTerm, setPersons}) => {
     if (searchResults.length > 0) {
 
       const foundPersons = searchResults.map(result => <p>{result.name}: {result.number}
-          <button onClick={() => {
-            console.log(`Persons before deletion:`, persons)
-            personService
-            .deleteObject(result.id)
-            .then(data => {
-              console.log("delete succesful")
-              console.log("response.data:", data)
-              console.log("Persons array after deletion:", persons)
-              setPersons(persons.map(person => person))
-            })
+          <button onClick={
+            () => {
+              if (window.confirm(`Are you sure you want to delete ${result.name}`)) {
+                personService
+                .deleteObject(result.id)
+                setPersons(persons.filter(p => result.id !== p.id))
+              }
+
+              else {
+                console.log("Deletion cancelled")
+              }
+ 
           }}>Delete</button>
         </p>)
 
@@ -47,16 +49,18 @@ const ReturnPersons = ({persons, searchTerm, setPersons}) => {
     }
   }
     const allPersonsData = persons.map(person => <p>{person.name}: {person.number}
-          <button onClick={() => {
-            console.log(`Persons before deletion:`, persons)
-            personService
-            .deleteObject(person.id)
-            .then(data => {
-              console.log("delete succesful")
-              console.log("response.data:", data)
-              console.log("Persons array after deletion:", persons)
-              setPersons(persons.filter(p => persons.id !== p.id))
-            })
+          <button onClick={
+            () => {
+              if (window.confirm(`Are you sure you want to delete ${person.name}`)) {
+                personService
+                .deleteObject(person.id)
+                setPersons(persons.filter(p => person.id !== p.id))
+              }
+
+              else {
+                console.log("Deletion cancelled")
+              }
+ 
           }}>Delete</button>
     </p>)
 
@@ -101,7 +105,6 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    console.log('button clicked', event.target)
 
     const personObject = {
       name: newName,
@@ -121,7 +124,7 @@ const App = () => {
       personService
       .create(personObject)
       .then(returnedPerson => {
-        console.log(returnedPerson)
+        console.log("Added person:" ,returnedPerson)
         setPersons(persons.concat(returnedPerson)) // Uusi muistiinpano ei automaattisesti renderöidy sivulle, ellei komponentille app aseteta uutta tilaa, kuten alempana (setterit)
         setNewName("")
         setNewNumber("")
