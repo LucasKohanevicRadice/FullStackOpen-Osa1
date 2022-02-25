@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from "./components/searchbar"
 import AddPersonForm from './components/addPersonForm'
 import axios from "axios"
+import personService from "./services/persons"
 
 
 const nameExists = (name, persons) => {
@@ -15,8 +16,7 @@ const nameExists = (name, persons) => {
 }
 
 
-
-const ReturnPersons = ({persons, searchTerm}) => {
+const ReturnPersons = ({persons, searchTerm, setPersons}) => {
 
 
   if (searchTerm) {
@@ -25,20 +25,40 @@ const ReturnPersons = ({persons, searchTerm}) => {
  
     if (searchResults.length > 0) {
 
-      const foundPersons = searchResults.map(result => <p>{result.name}: {result.number}</p>)
-      console.log("Row 29, foundPersons variable:", foundPersons)
+      const foundPersons = searchResults.map(result => <p>{result.name}: {result.number}
+          <button onClick={() => {
+            console.log(`Persons before deletion:`, persons)
+            personService
+            .deleteObject(result.id)
+            .then(data => {
+              console.log("delete succesful")
+              console.log("response.data:", data)
+              console.log("Persons array after deletion:", persons)
+              setPersons(persons.map(person => person))
+            })
+          }}>Delete</button>
+        </p>)
 
       return (
           <div>
             {foundPersons}
           </div>
       )
-
     }
-
   }
-  const allPersonsData = persons.map(person => <p>{person.name}: {person.number}</p>)
-  console.log("row 39, allPersonsData", allPersonsData)
+    const allPersonsData = persons.map(person => <p>{person.name}: {person.number}
+          <button onClick={() => {
+            console.log(`Persons before deletion:`, persons)
+            personService
+            .deleteObject(person.id)
+            .then(data => {
+              console.log("delete succesful")
+              console.log("response.data:", data)
+              console.log("Persons array after deletion:", persons)
+              setPersons(persons.filter(p => persons.id !== p.id))
+            })
+          }}>Delete</button>
+    </p>)
 
   return (
     <div>
@@ -66,15 +86,17 @@ const App = () => {
     ''
     )
 
+  //  palauttaa JSON datan, db.jsonista
   useEffect(() => {
-    console.log("effect")
-    axios
-    .get("http://localhost:3001/persons")
-    .then(response => {
+    personService
+    .getAll()
+    .then(initialPersons => {
       console.log("promise fulfilled")
-      setPersons(response.data)
+      console.log(initialPersons)
+      setPersons(initialPersons)
     })
   },[])
+  
   
 
   const addPerson = (event) => {
@@ -88,21 +110,33 @@ const App = () => {
       id: persons.length + 1,
     }
 
-    if (!nameExists(newName, persons))
-      {setPersons(persons.concat(personObject))
-      setNewName('')}
+    //Vanha tapa lisätä uusi nimi persons listalle:
+
+    // if (!nameExists(newName, persons)) 
+    //   {setPersons(persons.concat(personObject))
+    //   setNewName('')}
+
+    // Uusi tapa lisätä person-objekti, suoraan db.json serverille, JSON-objektina.
+    if(!nameExists(newName, persons)) {
+      personService
+      .create(personObject)
+      .then(returnedPerson => {
+        console.log(returnedPerson)
+        setPersons(persons.concat(returnedPerson)) // Uusi muistiinpano ei automaattisesti renderöidy sivulle, ellei komponentille app aseteta uutta tilaa, kuten alempana (setterit)
+        setNewName("")
+        setNewNumber("")
+      })
+    }
     
     else {alert("Name is already in use")}
 
   }
 
   const handlePersonChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
@@ -127,7 +161,10 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <ReturnPersons persons = {persons} searchTerm={searchTerm}/>
+      <ReturnPersons 
+      persons = {persons} 
+      searchTerm={searchTerm}
+      setPersons = {setPersons}/>
 
     </div>
   )
