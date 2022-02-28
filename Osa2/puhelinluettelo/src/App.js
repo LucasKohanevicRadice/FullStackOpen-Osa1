@@ -113,12 +113,6 @@ const App = () => {
       id: persons.length + 1,
     }
 
-    //Vanha tapa lisätä uusi nimi persons listalle:
-
-    // if (!nameExists(newName, persons)) 
-    //   {setPersons(persons.concat(personObject))
-    //   setNewName('')}
-
     // Uusi tapa lisätä person-objekti, suoraan db.json serverille, JSON-objektina.
     if(!nameExists(newName, persons)) {
       personService
@@ -131,7 +125,21 @@ const App = () => {
       })
     }
     
-    else {alert("Name is already in use")}
+    else {
+      if (window.confirm(`${newName} already exists. \n Would you like to update a new number for it?`))
+      {
+        const person = persons.find(p => p.name === newName)
+        const changedPerson = {...person, number: newNumber}
+          personService
+          .update(changedPerson.id, changedPerson)
+          .then(changedObject => {
+            setPersons(persons.map(p => p.id !== changedObject.id ? p : changedObject))
+          })
+      }
+
+      else {
+        console.log("update cancelled")
+      }
 
   }
 
@@ -171,7 +179,8 @@ const App = () => {
 
     </div>
   )
-
+ 
+}
 }
 
 export default App
