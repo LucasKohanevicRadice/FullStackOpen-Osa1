@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from "./components/searchbar"
 import AddPersonForm from './components/addPersonForm'
-import axios from "axios"
 import personService from "./services/persons"
+import OperationPopUp from './components/operationPopUp'
 
 
 const nameExists = (name, persons) => {
@@ -16,7 +16,7 @@ const nameExists = (name, persons) => {
 }
 
 
-const ReturnPersons = ({persons, searchTerm, setPersons}) => {
+const ReturnPersons = ({persons, searchTerm, setPersons, setPopUpMessage}) => {
 
 
   if (searchTerm) {
@@ -32,6 +32,11 @@ const ReturnPersons = ({persons, searchTerm, setPersons}) => {
                 personService
                 .deleteObject(result.id)
                 setPersons(persons.filter(p => result.id !== p.id))
+                setPopUpMessage(`${result.name} has been deleted.`)
+                setTimeout(() => {
+                  setPopUpMessage("")
+                }, 5000)
+
               }
 
               else {
@@ -55,6 +60,11 @@ const ReturnPersons = ({persons, searchTerm, setPersons}) => {
                 personService
                 .deleteObject(person.id)
                 setPersons(persons.filter(p => person.id !== p.id))
+                setPopUpMessage(`${person.name} has been deleted.`)
+                setTimeout(() => {
+                  setPopUpMessage("")
+                }, 5000)
+                
               }
 
               else {
@@ -90,6 +100,8 @@ const App = () => {
     ''
     )
 
+  const [popUpMessage, setPopUpMessage] = useState("")
+
   //  palauttaa JSON datan, db.jsonista
   useEffect(() => {
     personService
@@ -120,21 +132,37 @@ const App = () => {
       .then(returnedPerson => {
         console.log("Added person:" ,returnedPerson)
         setPersons(persons.concat(returnedPerson)) // Uusi muistiinpano ei automaattisesti renderöidy sivulle, ellei komponentille app aseteta uutta tilaa, kuten alempana (setterit)
+    
         setNewName("")
         setNewNumber("")
+
+        setPopUpMessage(`${newName} has been added to the phonebook.`)
+        setTimeout(() => {
+          setPopUpMessage("")
+        }, 5000)
       })
     }
     
     else {
+
+      // Päivitä numero jo olemassaolevalle nimelle:
       if (window.confirm(`${newName} already exists. \n Would you like to update a new number for it?`))
       {
         const person = persons.find(p => p.name === newName)
         const changedPerson = {...person, number: newNumber}
           personService
-          .update(changedPerson.id, changedPerson)
+          .update(person.id, changedPerson)
           .then(changedObject => {
             setPersons(persons.map(p => p.id !== changedObject.id ? p : changedObject))
           })
+          .catch(error => {
+            alert(error)
+          })
+
+          setPopUpMessage(`${person.name} has been updated.`)
+          setTimeout(() => {
+            setPopUpMessage("")
+          }, 5000)
       }
 
       else {
@@ -142,20 +170,22 @@ const App = () => {
       }
 
   }
+}
 
-  const handlePersonChange = (event) => {
-    setNewName(event.target.value)
-  }
+    const handlePersonChange = (event) => {
+      setNewName(event.target.value)
+    }
 
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
-
+    const handleNumberChange = (event) => {
+      setNewNumber(event.target.value)
+    }
 
   return (
     <div>
 
       <h2>Phonebook</h2>
+
+      <OperationPopUp message={popUpMessage}/>
 
       <SearchBar
       setSearchTerm={setSearchTerm}
@@ -175,12 +205,12 @@ const App = () => {
       <ReturnPersons 
       persons = {persons} 
       searchTerm={searchTerm}
-      setPersons = {setPersons}/>
+      setPersons = {setPersons}
+      setPopUpMessage = {setPopUpMessage}/> 
 
     </div>
   )
- 
-}
+
 }
 
 export default App
