@@ -1,0 +1,33 @@
+{
+  "name": "node_teht_osa3",
+  "version": "0.0.1",
+  "description": "Assignment for the part 3 of fullstackOpen",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "build:ui": "rm build && cd C:/Users/lucas/Documents/GitHub/FullStackOpen2021/Osa2/puhelinluettelo && npm run build && cp -r build C:/Users/lucas/Documents/FullStack_node_teht-v-"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasKohanevicRadice/FullStack_node_teht.git"
+  },
+  "author": "Lucas Kohanevic Radice",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasKohanevicRadice/FullStack_node_teht/issues"
+  },
+  "homepage": "https://github.com/LucasKohanevicRadice/FullStack_node_teht#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "save-dev": "^0.0.1-security"
+  }
+}

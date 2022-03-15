@@ -1,0 +1,8 @@
+POST http://localhost:3003/api/persons
+Content-Type: application/json 
+# Ei saa olla break linee http metodi rivin ja content type rivin välillä.
+
+{
+    "name":"hellad vellad",
+    "number": "16"
+} 
