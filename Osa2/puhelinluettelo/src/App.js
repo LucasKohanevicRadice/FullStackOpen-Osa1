@@ -138,8 +138,9 @@ const App = () => {
 
       })
       .catch(error => {
-        console.log(error.response.data)
-        setPopUpMessage(`Error: ${error.response.data}`)
+        const errorResponse = error.response.data.error
+        console.log(errorResponse)
+        setPopUpMessage(`Error: ${errorResponse}`)
         setTimeout(() => {
           setPopUpMessage("")
         }, 5000)
@@ -167,12 +168,13 @@ const App = () => {
           })
 
           .catch(error => {
-            console.log(error.response.data)
-            setPopUpMessage(`Error: ${error.response.data}`)
+            const errorResponse = error.response.data.error
+            console.log(errorResponse)
+            setPopUpMessage(`Error: ${errorResponse}`)
             setTimeout(() => {
               setPopUpMessage("")
             }, 5000)
-
+    
             setNewName("")
             setNewNumber("")
           })
