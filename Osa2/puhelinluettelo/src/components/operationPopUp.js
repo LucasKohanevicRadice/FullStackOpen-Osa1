@@ -7,7 +7,7 @@ const OperationPopUp = ({message}) => {
       return null
     }
 
-    else if (message.includes("delete")) {
+    else if (message.includes("delete") || message.includes("Error")) {
       return (
         <div className="redOperationPopUp">
           {message}

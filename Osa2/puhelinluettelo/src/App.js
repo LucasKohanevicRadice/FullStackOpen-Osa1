@@ -136,10 +136,16 @@ const App = () => {
         setNewName("")
         setNewNumber("")
 
-        setPopUpMessage(`${newName} has been added to the phonebook.`)
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        setPopUpMessage(`Error: ${error.response.data}`)
         setTimeout(() => {
           setPopUpMessage("")
         }, 5000)
+
+        setNewName("")
+        setNewNumber("")
       })
     }
     
@@ -154,15 +160,22 @@ const App = () => {
           .update(person.id, changedPerson)
           .then(changedObject => {
             setPersons(persons.map(p => p.id !== changedObject.id ? p : changedObject))
-          })
-          .catch(error => {
-            alert(error)
+            setPopUpMessage(`${person.name} has been updated.`)
+            setTimeout(() => {
+              setPopUpMessage("")
+            }, 5000)
           })
 
-          setPopUpMessage(`${person.name} has been updated.`)
-          setTimeout(() => {
-            setPopUpMessage("")
-          }, 5000)
+          .catch(error => {
+            console.log(error.response.data)
+            setPopUpMessage(`Error: ${error.response.data}`)
+            setTimeout(() => {
+              setPopUpMessage("")
+            }, 5000)
+
+            setNewName("")
+            setNewNumber("")
+          })
       }
 
       else {
