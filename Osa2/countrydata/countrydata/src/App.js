@@ -1,24 +1,32 @@
 import './App.css';
 import React, { useState, useEffect } from 'react'
 import Searchbar from './components/searchBar'
-import CountryData from './components/fetchCountryData'
+import FilteredCountries from './components/filteredCountries'
+import RenderableCountries from './components/renderableCountries';
 
 
 
-
-let arr = [1,2,2,3,45,5,3]
 
 const App = () => {
 
   const [searchTerm, setSearchTerm] = useState("")
-  console.log(CountryData(searchTerm))
-  console.log(searchTerm)
+  const [countries, setCountries] = useState([])
+
+  const fetchCountries = () => {
+    fetch("https://restcountries.com/v3.1/all")
+    .then(response => response.json())
+    .then(data => setCountries(data))
+  }
+
+  useEffect(() => {
+    fetchCountries()
+  }, [])
 
   return (
     <div className="App">
-    
       <Searchbar setSearchTerm = {setSearchTerm}/>
-      <p>{searchTerm}</p>
+      <RenderableCountries filteredCountries={FilteredCountries({countries,searchTerm})}/>
+
     </div>
   );
 }
