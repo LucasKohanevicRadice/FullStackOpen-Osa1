@@ -4,9 +4,6 @@ import Searchbar from './components/searchBar'
 import FilteredCountries from './components/filteredCountries'
 import RenderableCountries from './components/renderableCountries';
 
-
-
-
 const App = () => {
 
   const [searchTerm, setSearchTerm] = useState("")
@@ -15,7 +12,9 @@ const App = () => {
   const fetchCountries = () => {
     fetch("https://restcountries.com/v3.1/all")
     .then(response => response.json())
-    .then(data => setCountries(data))
+    .then(data => 
+      setCountries(data)
+      )
   }
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const App = () => {
     <div className="App">
       <Searchbar setSearchTerm = {setSearchTerm}/>
       <RenderableCountries filteredCountries={FilteredCountries({countries,searchTerm})}/>
-
     </div>
   );
 }
