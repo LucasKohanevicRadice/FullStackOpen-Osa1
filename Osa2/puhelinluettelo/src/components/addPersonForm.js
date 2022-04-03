@@ -1,7 +1,6 @@
 
 const AddPersonForm = ({addPerson, newName, handlePersonChange, newNumber, handleNumberChange}) => {
 
-
     return (
         <form onSubmit = {addPerson}>
         Name:<input value={newName}
@@ -16,4 +15,4 @@ const AddPersonForm = ({addPerson, newName, handlePersonChange, newNumber, handl
 
 }
 
-export default AddPersonForm
+export default AddPersonForm 
